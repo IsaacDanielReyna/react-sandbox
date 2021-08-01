@@ -93,6 +93,7 @@ export default function Login() {
                                 id='password'
                                 label='Password'
                                 variant='filled'
+                                type="password"
                                 required
                                 fullWidth
                                 error={hasInvalidPassword}
