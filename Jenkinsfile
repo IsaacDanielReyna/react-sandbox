@@ -1,4 +1,5 @@
 pipeline {
+    def app
     options {
         skipDefaultCheckout(true)
     }
