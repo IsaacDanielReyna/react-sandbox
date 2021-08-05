@@ -3,7 +3,7 @@ pipeline {
         skipDefaultCheckout(true)
     }
 
-    agent { dockerfile true }
+    agent any
 
     stages {
         stage('Reset Workspace') {
@@ -13,10 +13,9 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'node --version'
-                sh 'svn --version'
+                app = docker.build("isaacdanielreyna/react-sandbox")
             }
         }
     }
