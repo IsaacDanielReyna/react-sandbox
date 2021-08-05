@@ -3,7 +3,7 @@ pipeline {
         skipDefaultCheckout(true)
     }
 
-    agent { dockerfile true }
+    agent { Dockerfile true }
 
     stages {
         stage('Reset Workspace') {
