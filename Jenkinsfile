@@ -3,9 +3,7 @@ pipeline {
         skipDefaultCheckout(true)
     }
 
-    agent {
-        label 'master'
-    }
+    agent { dockerfile true }
 
     stages {
         stage('Reset Workspace') {
@@ -17,7 +15,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Testing Stage'
+                sh 'node --version'
+                sh 'svn --version'
             }
         }
     }
