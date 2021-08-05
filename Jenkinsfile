@@ -1,38 +1,10 @@
-pipeline {
+node {
     def app
-    options {
-        skipDefaultCheckout(true)
-    }
 
-    agent any
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
 
-    stages {
-        stage('Reset Workspace') {
-            steps {
-                deleteDir()
-                sh 'ls -al'   
-            }
-        }
-
-        stage('Build') {
-            steps {
-                app = docker.build("isaacdanielreyna/react-sandbox")
-            }
-        }
-    }
-
-    post {
-        always {
-            sh 'ls -al'
-        }
-        
-        success {
-            deleteDir()
-            sh 'ls -al'
-        }
-
-        unsuccessful {
-            echo 'Job Failed'
-        }
+        app = docker.build("isaacdanielreyna/react-sandbox")
     }
 }
