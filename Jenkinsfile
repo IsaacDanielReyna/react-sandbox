@@ -38,10 +38,11 @@ pipeline {
         stage('setup - PR') {
             when { branch 'PR-*' }
             steps {
+                sh 'printenv'
                 script {
                     GIT_BRANCH = env.CHANGE_BRANCH
                     echo "PR: ${GIT_BRANCH}"
-                    echo "branch: ${branch}"
+                    // echo "branch: ${branch}" doesn't work
                 }
             }
         }
@@ -56,7 +57,6 @@ pipeline {
                     }
                 }
                 echo "GIT_BRANCH: ${GIT_BRANCH}"
-                sh 'printenv'
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS_GITHUB}",
                 url: "${GIT_URL}"
