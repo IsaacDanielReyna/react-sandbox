@@ -30,10 +30,14 @@ pipeline {
             steps {
                 sh 'printenv'
                 script {
+                    echo "BRANCH_NAME: ${BRANCH_NAME}"
+                    echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
                     // CHANGE_BRANCH=pull-request-test
                     // CHANGE_URL=https://github.com/IsaacDanielReyna/react-sandbox/pull/2
                     // BRANCH_NAME=PR-2
                 }
+                echo "BRANCH_NAME: ${BRANCH_NAME}"
+                echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
             }
         }
 
