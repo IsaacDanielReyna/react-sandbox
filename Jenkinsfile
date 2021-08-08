@@ -30,6 +30,8 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
+                    } else if (env.CHANGE_ID) {
+                        GIT_BRANCH = env.CHANGE_ID
                     }
                 }
                 git branch: "${GIT_BRANCH}",
