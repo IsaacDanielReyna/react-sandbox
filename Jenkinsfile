@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        BRANCH = 'master'
+        GIT_BRANCH = 'master'
         CREDENTIALS = 'github-isaacdanielreyna'
         GIT_URL = 'https://github.com/IsaacDanielReyna/react-sandbox.git'
     }
@@ -25,10 +25,14 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 script {
-                    BRANCH = (env.BRANCH_NAME) ? env.BRANCH_NAME : 'master'
+                    if (env.BRANCH) {
+                        GIT_BRANCH = env.BRANCH
+                    } else if (env.BRANCH_NAME) {
+                        GIT_BRANCH = env.BRANCH_NAME
+                    }
                 }
 
-                git branch: "${BRANCH}",
+                git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS}",
                 url: "${GIT_URL}"
             }
