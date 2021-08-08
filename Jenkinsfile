@@ -30,8 +30,10 @@ pipeline {
                     } else if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
                     }
+                    echo "SCRIPT: GIT_BRANCH: ${GIT_BRANCH}"
                 }
 
+                echo "GIT_BRANCH: ${GIT_BRANCH}"
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS}",
                 url: "${GIT_URL}"
