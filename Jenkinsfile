@@ -1,43 +1,29 @@
 pipeline {
-    // options {
-    //     skipDefaultCheckout(true)
-    // }
 
     agent {
         label 'master'
     }
 
     stages {
-        stage('Reset Workspace') {
-            steps {
-                sh 'ls -al'
-                deleteDir()
-                sh 'ls -al'
-            }
-        }
-
-        // stage('Clone Repository') {
-        //     steps {
-        //         git branch: 'master',
-        //         credentialsId: 
-        //     }
-        // }
-
         stage('Test') {
             steps {
                 echo 'Testing Stage'
+                sh 'ls -hal'
+                echo "BRANCH: ${BRANCH_NAME}"
             }
         }
     }
 
     post {
         always {
-            sh 'ls -al'
+            // Show workspace contents before and after deletion
+            sh 'ls -hal'
+            deleteDir()
+            sh 'ls -hal'
         }
         
         success {
-            deleteDir()
-            sh 'ls -al'
+            echo "Job Succeded"
         }
 
         unsuccessful {
