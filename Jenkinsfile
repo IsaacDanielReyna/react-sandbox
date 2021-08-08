@@ -1,10 +1,47 @@
-node {
-    def app
+pipeline {
+    options {
+        // skipDefaultCheckout(true)
+    }
 
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
+    agent {
+        label 'master'
+    }
 
-        app = docker.build("react-sandbox")
+    stages {
+        stage('Reset Workspace') {
+            steps {
+                sh 'ls -al'
+                deleteDir()
+                sh 'ls -al'
+            }
+        }
+
+        // stage('Clone Repository') {
+        //     steps {
+        //         git branch: 'master',
+        //         credentialsId: 
+        //     }
+        // }
+
+        stage('Test') {
+            steps {
+                echo 'Testing Stage'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'ls -al'
+        }
+        
+        success {
+            deleteDir()
+            sh 'ls -al'
+        }
+
+        unsuccessful {
+            echo 'Job Failed'
+        }
     }
 }
