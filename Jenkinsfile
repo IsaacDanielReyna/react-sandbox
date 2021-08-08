@@ -25,24 +25,14 @@ pipeline {
             }
         }
 
-        stage('setup - MR') {
-            when { branch 'MR-*' }
-            steps {
-                script {
-                    GIT_BRANCH = env.CHANGE_BRANCH
-                    echo "MR: ${GIT_BRANCH}"
-                }
-            }
-        }
-
         stage('setup - PR') {
             when { branch 'PR-*' }
             steps {
                 sh 'printenv'
                 script {
-                    GIT_BRANCH = env.CHANGE_BRANCH
-                    echo "PR: ${GIT_BRANCH}"
-                    // echo "branch: ${branch}" doesn't work
+                    // CHANGE_BRANCH=pull-request-test
+                    // CHANGE_URL=https://github.com/IsaacDanielReyna/react-sandbox/pull/2
+                    // BRANCH_NAME=PR-2
                 }
             }
         }
@@ -52,8 +42,6 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
-                    } else if (env.CHANGE_BRANCH) {
-                        GIT_BRANCH = env.CHANGE_BRANCH
                     }
                 }
                 echo "GIT_BRANCH: ${GIT_BRANCH}"
