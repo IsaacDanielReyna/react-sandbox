@@ -54,6 +54,7 @@ pipeline {
                         GIT_BRANCH = env.CHANGE_BRANCH
                     }
                 }
+                echo "GIT_BRANCH: ${GIT_BRANCH}"
                 sh 'printenv'
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS_GITHUB}",
