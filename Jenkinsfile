@@ -44,7 +44,9 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 script {
-                    if (env.BRANCH_NAME) {
+                    if (env.CHANGE_BRANCH) {
+                        GIT_BRANCH = env.CHANGE_BRANCH
+                    } else if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
                     }
                 }
