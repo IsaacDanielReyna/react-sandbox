@@ -28,10 +28,14 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 script {
-                    if (env.BRANCH_NAME) {
+                    // Determine if feature branch or a pull request
+                    if (env.CHANGE_BRANCH) {
+                        GIT_BRANCH = env.CHANGE_BRANCH
+                    } else if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
                     }
                 }
+                echo "GIT_BRANCH: ${GIT_BRANCH}"
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS_GITHUB}",
                 url: "${GIT_URL}"
@@ -56,7 +60,7 @@ pipeline {
     }
 
     post {
-        always {            
+        always {
             //  Delete images
             sh 'docker image prune --force --all'
             
