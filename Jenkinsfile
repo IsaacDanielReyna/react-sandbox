@@ -25,6 +25,26 @@ pipeline {
             }
         }
 
+        stage('setup - MR') {
+            when { branch 'MR-*' }
+            steps {
+                script {
+                    GIT_BRANCH = env.CHANGE_BRANCH
+                    echo "MR: ${GIT_BRANCH}"
+                }
+            }
+        }
+
+        stage('setup - PR') {
+            when { branch 'PR-*' }
+            steps {
+                script {
+                    GIT_BRANCH = env.CHANGE_BRANCH
+                    echo "PR: ${GIT_BRANCH}"
+                }
+            }
+        }
+
         stage('Git Checkout') {
             steps {
                 script {
