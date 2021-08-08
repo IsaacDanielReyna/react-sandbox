@@ -8,34 +8,42 @@ pipeline {
         skipDefaultCheckout(true)
     }
 
+    environment {
+        BRANCH = 'master'
+        CREDENTIALS = 'github-isaacdanielreyna'
+        GIT_URL = 'https://github.com/IsaacDanielReyna/react-sandbox.git'
+    }
+
     stages {
         stage('Reset Workspace') {
             steps {
                 deleteDir()
-                sh 'ls -al'   
+                sh 'ls -al'
             }
         }
 
         stage('Git Checkout') {
             steps {
-                git branch: "${BRANCH_NAME}",
-                credentialsId: 'github-isaacdanielreyna',
-                url: 'https://github.com/IsaacDanielReyna/react-sandbox.git'
+                script {
+                    BRANCH = (env.BRANCH_NAME) ? env.BRANCH_NAME : 'master'
+                }
+
+                git branch: "${BRANCH}",
+                credentialsId: "${CREDENTIALS}",
+                url: "${GIT_URL}"
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Testing Stage'
-                echo "BRANCH_NAME: ${BRANCH_NAME}"
-                echo "BRANCH: ${BRANCH}"
             }
         }
     }
 
     post {
         always {
-            // Show workspace contents before and after deletion
+            echo 'Reset Workspace'
             sh 'ls -hal'
             deleteDir()
             sh 'ls -hal'
