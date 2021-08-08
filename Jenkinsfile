@@ -9,6 +9,22 @@ pipeline {
     }
 
     stages {
+        stage('Reset Workspace') {
+            steps {
+                deleteDir()
+                sh 'ls -al'   
+            }
+        }
+
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+                // git branch: "${BRANCH_NAME}",
+                // credentialsId: '',
+                // url: ''
+            }
+        }
+
         stage('Test') {
             steps {
                 echo 'Testing Stage'
