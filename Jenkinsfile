@@ -10,8 +10,11 @@ pipeline {
 
     environment {
         GIT_BRANCH = 'master'
-        CREDENTIALS = 'github-isaacdanielreyna'
+        CREDENTIALS_GITHUB = 'github-isaacdanielreyna'
+        CREDENTIALS_DOCKER = 'docker-isaacdanielreyna'
         GIT_URL = 'https://github.com/IsaacDanielReyna/react-sandbox.git'
+        IMAGE = 'isaacdanielreyna/react-sandbox'
+        TAG = '0.1.0'
     }
 
     stages {
@@ -30,21 +33,37 @@ pipeline {
                     }
                 }
                 git branch: "${GIT_BRANCH}",
-                credentialsId: "${CREDENTIALS}",
+                credentialsId: "${CREDENTIALS_GITHUB}",
                 url: "${GIT_URL}"
             }
         }
 
-        stage('Test') {
+        stage('Build Image') {
             steps {
-                echo 'Testing Stage'
+                sh "docker build -t ${IMAGE}:${TAG} ."
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${CREDENTIALS_DOCKER}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                }
+                sh 'docker push ${IMAGE}:${TAG}'
+
             }
         }
     }
 
     post {
-        always {
-            echo 'Reset Workspace'
+        always {            
+            //  Delete images
+            sh 'docker image prune --force --all'
+            
+            // Logout from docker
+            sh 'docker logout'
+
+            echo 'Delete the following files'
             sh 'ls -hal'
             deleteDir()
             sh 'ls -hal'
