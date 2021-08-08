@@ -41,6 +41,7 @@ pipeline {
                 script {
                     GIT_BRANCH = env.CHANGE_BRANCH
                     echo "PR: ${GIT_BRANCH}"
+                    echo "branch: ${branch}"
                 }
             }
         }
