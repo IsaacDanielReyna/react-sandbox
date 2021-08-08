@@ -22,13 +22,13 @@ pipeline {
             steps {
                 deleteDir()
                 sh 'ls -al'
+                sh 'printenv'
             }
         }
 
         stage('setup - PR') {
             when { branch 'PR-*' }
             steps {
-                sh 'printenv'
                 script {
                     echo "BRANCH_NAME: ${BRANCH_NAME}"
                     echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
