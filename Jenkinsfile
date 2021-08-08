@@ -34,7 +34,7 @@ pipeline {
                         GIT_BRANCH = env.CHANGE_BRANCH
                     }
                 }
-
+                sh 'printenv'
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS_GITHUB}",
                 url: "${GIT_URL}"
