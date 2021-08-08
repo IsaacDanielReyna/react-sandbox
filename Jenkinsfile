@@ -30,10 +30,11 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
-                    } else if (env.CHANGE_ID) {
-                        GIT_BRANCH = env.CHANGE_ID
+                    } else if (env.CHANGE_BRANCH) {
+                        GIT_BRANCH = env.CHANGE_BRANCH
                     }
                 }
+
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS_GITHUB}",
                 url: "${GIT_URL}"
