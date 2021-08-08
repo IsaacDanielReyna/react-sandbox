@@ -4,6 +4,10 @@ pipeline {
         label 'master'
     }
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     stages {
         stage('Test') {
             steps {
