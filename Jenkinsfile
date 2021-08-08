@@ -31,6 +31,8 @@ pipeline {
                         GIT_BRANCH = env.BRANCH_NAME
                     }
                     echo "SCRIPT: GIT_BRANCH: ${GIT_BRANCH}"
+                    echo "SCRIPT: BRANCH: ${BRANCH}"
+                    echo "SCRIPT: BRANCH_NAME: ${BRANCH_NAME}"
                 }
 
                 echo "GIT_BRANCH: ${GIT_BRANCH}"
