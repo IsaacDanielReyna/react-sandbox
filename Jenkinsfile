@@ -18,17 +18,15 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                checkout scm
-                // git branch: "${BRANCH_NAME}",
-                // credentialsId: '',
-                // url: ''
+                git branch: "${BRANCH_NAME}",
+                credentialsId: 'github-isaacdanielreyna',
+                url: 'https://github.com/IsaacDanielReyna/react-sandbox.git'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Testing Stage'
-                sh 'ls -hal'
                 echo "BRANCH: ${BRANCH_NAME}"
             }
         }
