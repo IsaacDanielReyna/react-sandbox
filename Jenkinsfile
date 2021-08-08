@@ -27,7 +27,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing Stage'
-                echo "BRANCH: ${BRANCH_NAME}"
+                echo "BRANCH_NAME: ${BRANCH_NAME}"
+                echo "BRANCH: ${BRANCH}"
             }
         }
     }
