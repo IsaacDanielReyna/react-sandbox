@@ -24,19 +24,11 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                sh 'printenv'
                 script {
-                    if (env.BRANCH) {
-                        GIT_BRANCH = env.BRANCH
-                    } else if (env.BRANCH_NAME) {
+                    if (env.BRANCH_NAME) {
                         GIT_BRANCH = env.BRANCH_NAME
                     }
-                    echo "SCRIPT: GIT_BRANCH: ${GIT_BRANCH}"
-                    // echo "SCRIPT: BRANCH: ${BRANCH}"
-                    echo "SCRIPT: BRANCH_NAME: ${BRANCH_NAME}"
                 }
-
-                echo "GIT_BRANCH: ${GIT_BRANCH}"
                 git branch: "${GIT_BRANCH}",
                 credentialsId: "${CREDENTIALS}",
                 url: "${GIT_URL}"
