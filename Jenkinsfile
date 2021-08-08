@@ -24,7 +24,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                printenv
+                sh 'printenv'
                 script {
                     if (env.BRANCH) {
                         GIT_BRANCH = env.BRANCH
