@@ -9,6 +9,7 @@ import Profile from './components/profile/Profile';
 import Error404 from './components/errors/Error404/Error404';
 import Navigation from './components/common/navigation/Navigation';
 import PrivateRoute from './components/common/private-route/PrivateRoute';
+import Container from '@material-ui/core/Container';
 
 export default function App() {
     return (
@@ -16,13 +17,15 @@ export default function App() {
             <CssBaseline />
             <Router>
                 <Navigation />
-                <Switch>
-                    <PrivateRoute exact path='/' component={Home} />
-                    <Route exact path='/login' component={Login} />
-                    <Route exact path='/logout' component={Logout} />
-                    <PrivateRoute exact path='/profile' component={Profile} />
-                    <Route component={Error404} />
-                </Switch>
+                <Container>
+                    <Switch>
+                        <PrivateRoute exact path='/' component={Home} />
+                        <Route exact path='/login' component={Login} />
+                        <Route exact path='/logout' component={Logout} />
+                        <PrivateRoute exact path='/profile' component={Profile} />
+                        <Route component={Error404} />
+                    </Switch>
+                </Container>
             </Router>
         </ThemeProvider>
     );

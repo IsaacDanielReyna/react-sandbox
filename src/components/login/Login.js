@@ -4,13 +4,8 @@ import { Button, Box, Collapse, makeStyles, TextField } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        zIndex: '-1',
-        position: 'absolute',
-        top: '0',
-        width: '100%',
-    },
     formContainer: {
+        paddingTop: '80px',
         width: '300px',
         margin: '0 auto',
     },
@@ -75,50 +70,46 @@ export default function Login() {
 
     return (
         <>
-            <div className={classes.container}>
-                <Box display='flex' alignItems='center' sx={{ height: '95vh' }}>
-                    <div className={classes.formContainer}>
-                        <form className={classes.form} noValidate autoComplete='off'>
-                            <TextField
-                                id='username'
-                                label='Username'
-                                variant='filled'
-                                required
-                                fullWidth
-                                error={hasInvalidUsername}
-                                value={username}
-                                onChange={(event) => setUsername(event.target.value)}
-                            />
-                            <TextField
-                                id='password'
-                                label='Password'
-                                variant='filled'
-                                type="password"
-                                required
-                                fullWidth
-                                error={hasInvalidPassword}
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                            />
-                            <Button
-                                disabled={username === '' || password === ''}
-                                variant='contained'
-                                size='large'
-                                color='primary'
-                                fullWidth
-                                type='submit'
-                                onClick={validateLogin}
-                            >
-                                Login
-                            </Button>
-                            <div className={classes.alertContainer}>
-                                <Collapse in={alertMessage.length > 0}>
-                                    <Alert severity={severity}>{alertMessage}</Alert>
-                                </Collapse>
-                            </div>
-                        </form>
+            <div className={classes.formContainer}>
+                <form className={classes.form} noValidate autoComplete='off'>
+                    <TextField
+                        id='username'
+                        label='Username'
+                        variant='filled'
+                        required
+                        fullWidth
+                        error={hasInvalidUsername}
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                    <TextField
+                        id='password'
+                        label='Password'
+                        variant='filled'
+                        type='password'
+                        required
+                        fullWidth
+                        error={hasInvalidPassword}
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <Button
+                        disabled={username === '' || password === ''}
+                        variant='contained'
+                        size='large'
+                        color='primary'
+                        fullWidth
+                        type='submit'
+                        onClick={validateLogin}
+                    >
+                        Login
+                    </Button>
+                    <div className={classes.alertContainer}>
+                        <Collapse in={alertMessage.length > 0}>
+                            <Alert severity={severity}>{alertMessage}</Alert>
+                        </Collapse>
                     </div>
-                </Box>
+                </form>
             </div>
         </>
     );

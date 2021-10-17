@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  react-sandbox:
+    image: ${IMAGE}:${TAG}
+    container_name: ${CONTAINER_NAME}
+    ports:
+      - "${EXTERNAL_PORT}:${INTERNAL_PORT}"

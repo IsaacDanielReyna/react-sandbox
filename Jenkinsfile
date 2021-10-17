@@ -15,6 +15,9 @@ pipeline {
         GIT_URL = 'https://github.com/IsaacDanielReyna/react-sandbox.git'
         IMAGE = 'isaacdanielreyna/react-sandbox'
         TAG = '0.1.0'
+        CONTAINER_NAME = 'react-sandbox'
+        EXTERNAL_PORT = '1337'
+        INTERNAL_PORT = '80'
     }
 
     stages {
@@ -54,16 +57,18 @@ pipeline {
                     sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
                 }
                 sh 'docker push ${IMAGE}:${TAG}'
+            }
+        }
 
+        stage('Deploy Container') {
+            steps {
+                sh './deploy.sh ${IMAGE} ${TAG} ${CONTAINER_NAME} ${EXTERNAL_PORT} ${INTERNAL_PORT}'
             }
         }
     }
 
     post {
         always {
-            //  Delete images
-            sh 'docker image prune --force --all'
-            
             // Logout from docker
             sh 'docker logout'
 
