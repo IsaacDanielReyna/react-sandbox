@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 main() {
     declare -A local vars=(
@@ -11,8 +11,14 @@ main() {
     )
 
     validate
-    createENV
-    deploy
+    deployWithDockerRun
+}
+
+deployWithDockerRun() {
+    local outputStop=$(docker stop "${vars['CONTAINER_NAME']}")
+    local outputRemove=$(docker rm "${vars['CONTAINER_NAME']}")
+    local outputDockerImageRemove=$(docker image rm "${vars['IMAGE']}":"${vars['TAG']}")
+    docker run -d --name "${vars['CONTAINER_NAME']}" -p "${vars['EXTERNAL_PORT']}":"${vars['INTERNAL_PORT']}" -t "${vars['IMAGE']}":"${vars['TAG']}"
 }
 
 validate() {
@@ -40,7 +46,8 @@ createENV() {
     echo "INTERNAL_PORT=${vars['INTERNAL_PORT']}" >> .env
 }
 
-deploy() {
+deployWithDockerCompose() {
+    createENV
     docker-compose down
     docker-compose up -d
 }
