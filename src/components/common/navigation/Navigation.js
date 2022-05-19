@@ -32,6 +32,9 @@ export default function Navigation() {
                     <Link to='./profile'>
                         <Button>Profile</Button>
                     </Link>
+                    <Link to='./registration'>
+                        <Button>Register</Button>
+                    </Link>                    
                     <Link to='./login'>
                         <Button>Login</Button>
                     </Link>

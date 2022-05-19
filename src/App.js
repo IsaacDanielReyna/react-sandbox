@@ -10,6 +10,7 @@ import Error404 from './components/errors/Error404/Error404';
 import Navigation from './components/common/navigation/Navigation';
 import PrivateRoute from './components/common/private-route/PrivateRoute';
 import Container from '@material-ui/core/Container';
+import Register from './components/register/Register';
 
 export default function App() {
     return (
@@ -22,6 +23,7 @@ export default function App() {
                         <PrivateRoute exact path='/' component={Home} />
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/logout' component={Logout} />
+                        <Route exact path='/registration' component={Register} />
                         <PrivateRoute exact path='/profile' component={Profile} />
                         <Route component={Error404} />
                     </Switch>

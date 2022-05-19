@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Box, Collapse, makeStyles, TextField } from '@material-ui/core';
+import { Button, Collapse, makeStyles, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
