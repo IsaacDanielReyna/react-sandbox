@@ -29,6 +29,7 @@ export default function Register() {
     const { 
         register,
         handleSubmit,
+        setError,
         formState: { errors }
     } = useForm({
         defaultValues: {
@@ -45,8 +46,15 @@ export default function Register() {
             setSeverity('success');
             setAlertMessage('Registration Successful', response.data);
         }).catch(error => {
-            setSeverity('error');
-            setAlertMessage('Submission error', error);
+            const errors = error.response.data;
+            if (errors.username) {
+                setSeverity('error');
+                setAlertMessage('');
+                setError('username', {
+                    type: "server",
+                    message: errors.username.message,
+                });
+            }
         });
     };
 

@@ -26,19 +26,19 @@ export default function Navigation() {
                     <Typography variant='h6' className={classes.title}>
                         Isaac Daniel Reyna
                     </Typography>
-                    <Link to='./'>
+                    <Link to='/'>
                         <Button>Home</Button>
                     </Link>
-                    <Link to='./profile'>
+                    <Link to='/profile'>
                         <Button>Profile</Button>
                     </Link>
-                    <Link to='./registration'>
+                    <Link to='/registration'>
                         <Button>Register</Button>
                     </Link>                    
-                    <Link to='./login'>
+                    <Link to='/login'>
                         <Button>Login</Button>
                     </Link>
-                    <Link to='./logout'>
+                    <Link to='/logout'>
                         <Button>Logout</Button>
                     </Link>
                 </Toolbar>

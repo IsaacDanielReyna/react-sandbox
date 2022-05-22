@@ -24,7 +24,7 @@ export default function App() {
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/logout' component={Logout} />
                         <Route exact path='/registration' component={Register} />
-                        <PrivateRoute exact path='/profile' component={Profile} />
+                        <PrivateRoute path='/profile/:username?' component={Profile} />
                         <Route component={Error404} />
                     </Switch>
                 </Container>

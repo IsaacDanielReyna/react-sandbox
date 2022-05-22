@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import userService from '../../services/user-service';
 
-export default function Profile() {
+export default function Profile(props) {
     const [user, setUser] = useState({
         "username": "",
         "first_name": "",
@@ -10,7 +10,9 @@ export default function Profile() {
     });
 
     React.useEffect(() => {
-        userService.profile('jsmith').then(response => {
+        const username = props.match.params.username || 'jsmith';
+        console.log('username', username);
+        userService.profile(username).then(response => {
             if (response.data) {
                 setUser(response.data);
             }
@@ -23,7 +25,7 @@ export default function Profile() {
             <p>Username: {user.username}</p>
             <p>First Name: {user.first_name}</p>
             <p>Last Name: {user.last_name}</p>
-            <p>Paswword: {user.password}</p>
+            <p>Password: {user.password}</p>
         </>
     );
 }

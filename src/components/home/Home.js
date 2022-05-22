@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { DataGrid } from '@material-ui/data-grid';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PersonIcon from '@mui/icons-material/Person';
+import Link from '@mui/material/Link';
 
 export default function Home() {
     const [users, setUsers] = useState([]);
@@ -38,8 +43,25 @@ export default function Home() {
             `${params.getValue(params.id, 'first_name') || ''} ${
               params.getValue(params.id, 'last_name') || ''
             }`,
+        },
+        {
+            field: 'action',
+            headerName: 'Action',
+            sortable: false,
+            renderCell: (values) => {
+                return <Link href={`/profile/${values.row.username}`} >
+                <IconButton aria-label="delete" color="primary">
+                    <PersonIcon />
+                </IconButton>
+                </Link>
+            }
         }
-      ];
+    ];
+
+    const pageSize = 10;
+    const headerSize = 56;
+    const rowSize = 52;
+    const tableHeight = pageSize * rowSize + headerSize + 54
 
     React.useEffect(() => {
         axios.get('/list/').then(response => {
@@ -58,11 +80,17 @@ export default function Home() {
     return (
         <>
             <h1>Home</h1>
-            <div style={{ height: '75vh', width: '100%' }}>
+            <Stack direction="row" spacking={1}>
+                <IconButton aria-label="view" color="primary">
+                    <DeleteIcon />
+                </IconButton>
+            </Stack>
+            <div style={{ height: `${tableHeight}px`, width: '100%' }}>
             <DataGrid
                 rows={users}
                 columns={columns}
-                pageSize={10}
+                pageSize={pageSize}
+                rowsPerPageOptions={[pageSize]}
                 checkboxSelection
                 disableSelectionOnClick
             />
