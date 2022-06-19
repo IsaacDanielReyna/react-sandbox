@@ -20,6 +20,11 @@ pipeline {
         INTERNAL_PORT = '80'
     }
 
+    parameters {
+        booleanParam(name: 'BUILD', defaultValue: true, description: 'Builds the image')
+        booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploys the container')
+    }
+
     stages {
         stage('Reset Workspace') {
             steps {
@@ -46,12 +51,14 @@ pipeline {
         }
 
         stage('Build Image') {
+            when { expression { return params.BUILD }}
             steps {
                 sh "docker build -t ${IMAGE}:${TAG} ."
             }
         }
 
         stage('Push Image') {
+            when { expression { return params.BUILD }}
             steps {
                 withCredentials([usernamePassword(credentialsId: "${CREDENTIALS_DOCKER}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
@@ -61,6 +68,7 @@ pipeline {
         }
 
         stage('Deploy Container') {
+            when { expression { return params.DEPLOY }}
             steps {
                 sh './deploy.sh ${IMAGE} ${TAG} ${CONTAINER_NAME} ${EXTERNAL_PORT} ${INTERNAL_PORT}'
             }
