@@ -18,7 +18,8 @@ deployWithDockerRun() {
     local outputStop=$(docker stop "${vars['CONTAINER_NAME']}")
     local outputRemove=$(docker rm "${vars['CONTAINER_NAME']}")
     local outputDockerImageRemove=$(docker image rm "${vars['IMAGE']}":"${vars['TAG']}")
-    docker run -d --name "${vars['CONTAINER_NAME']}" -p "${vars['EXTERNAL_PORT']}":"${vars['INTERNAL_PORT']}" -t "${vars['IMAGE']}":"${vars['TAG']}"
+    docker network create --driver bridge demo_network || true
+    docker run -d --network=demo_network --name "${vars['CONTAINER_NAME']}" -p "${vars['EXTERNAL_PORT']}":"${vars['INTERNAL_PORT']}" -t "${vars['IMAGE']}":"${vars['TAG']}"
 }
 
 validate() {
