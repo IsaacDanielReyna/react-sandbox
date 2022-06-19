@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import Link from '@mui/material/Link';
+import userService from '../../services/user-service';
 
 export default function Home() {
     const [users, setUsers] = useState([]);
@@ -64,7 +65,7 @@ export default function Home() {
     const tableHeight = pageSize * rowSize + headerSize + 54
 
     React.useEffect(() => {
-        axios.get('/list/').then(response => {
+        userService.getUsers().then(response => {
             if (response.data) {
                 let userlist = response.data.map((user, index) => {
                     return {

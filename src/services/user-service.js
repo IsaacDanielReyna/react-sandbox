@@ -6,6 +6,9 @@ const userService = {
     },
     register: (user) => {
         return api.post(`/register/`, user)
+    },
+    getUsers: () => {
+        return api.get('list')
     }
 } 
 
