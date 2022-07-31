@@ -1,6 +1,9 @@
-import { AppBar, Button, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AppBar, Button, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -8,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
         '& a': {
             textDecoration: 'none',
         },
+        position: 'relative',
+        zIndex: 1,
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -17,13 +22,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Navigation() {
+export default function Navigation({toggleDrawer, open}) {
     const classes = useStyles();
+
     return (
+        <>
         <div className={classes.root}>
             <AppBar position='static'>
                 <Toolbar>
-                    <Typography variant='h6' className={classes.title}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        edge="start"
+                        sx={{ mr: 2 }}
+                        >
+                            {open ? <MenuOpenIcon /> : <MenuIcon /> }
+                    </IconButton>
+                    <Typography variant='h6' className={classes.title} onClick={() => {toggleDrawer(true)}}>
                         Isaac Daniel Reyna
                     </Typography>
                     <Link to='/'>
@@ -44,5 +60,6 @@ export default function Navigation() {
                 </Toolbar>
             </AppBar>
         </div>
+        </>
     );
 }

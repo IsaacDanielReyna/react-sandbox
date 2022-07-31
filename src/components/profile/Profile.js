@@ -17,6 +17,7 @@ export default function Profile(props) {
                 setUser(response.data);
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
