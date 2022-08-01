@@ -17,7 +17,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@material-ui/core';
 
 export default function App() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
     }
