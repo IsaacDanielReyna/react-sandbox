@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
@@ -14,6 +15,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 const drawerWidth = 240;
 
@@ -74,6 +77,7 @@ const drawerMenu = [
     listItems: [
       {
         title: "Blueprints",
+        id: 1,
         icon: <InboxIcon color="primary" />,
         listItems: [
           { title: "One" },
@@ -85,11 +89,13 @@ const drawerMenu = [
       },
       {
         title: "Dashboards",
-        icon: <MailIcon />,
+        id: 2,
+        icon: <MailIcon color="primary" />,
       },
       {
         title: "Data Display",
-        icon: <InboxIcon />,
+        id: 3,
+        icon: <InboxIcon color="primary" />,
         listItems: [
           { title: "One" },
           { title: "Two" },
@@ -105,7 +111,8 @@ const drawerMenu = [
     listItems: [
       {
         title: "Users",
-        icon: <InboxIcon />,
+        id: 4,
+        icon: <InboxIcon color="primary" />,
         listItems: [
           { title: "One" },
           { title: "Two" },
@@ -116,7 +123,8 @@ const drawerMenu = [
       },
       {
         title: "Projects",
-        icon: <MailIcon />,
+        id: 5,
+        icon: <MailIcon color="primary" />,
         listItems: [
           { title: "One" },
           { title: "Two" },
@@ -127,7 +135,8 @@ const drawerMenu = [
       },
       {
         title: "Invoices",
-        icon: <InboxIcon />,
+        id: 6,
+        icon: <InboxIcon color="primary" />,
         listItems: [
           { title: "One" },
           { title: "Two" },
@@ -141,8 +150,17 @@ const drawerMenu = [
 ];
 
 export default function SideBar({ isOpen }) {
-  const handleClick = (item) => {
-    console.log(item);
+    const [settings, setSettings] = useState([
+        { id: 1, open: false },
+        { id: 2, open: false },
+        { id: 3, open: false },
+        { id: 4, open: false },
+        { id: 5, open: false },
+        { id: 6, open: false },
+    ]);
+
+  const handleClick = (id) => {
+    setSettings(settings.map(item => item.id === id ? { ...item, open: !item.open } : item));
   };
 
   return (
@@ -154,10 +172,10 @@ export default function SideBar({ isOpen }) {
         </IconButton>
       </DrawerHeader>
       <Divider />
-      {drawerMenu.map((menu) => (
+      {drawerMenu.map((header) => (
         <List
           color="inherit"
-          key={menu.title}
+          key={header.title}
           subheader={
             <ListSubheader
               component="div"
@@ -168,20 +186,20 @@ export default function SideBar({ isOpen }) {
                 display: isOpen ? "block" : "none",
               }}
             >
-              {menu.title}
+              {header.title}
             </ListSubheader>
           }
         >
-          {menu.listItems.map((item) => (
+          {header.listItems.map((menu) => (
             <ListItem
               color="primary"
-              key={item.title}
+              key={menu.title}
               disablePadding
               sx={{ display: "block" }}
             >
               <ListItemButton
                 onClick={() => {
-                  handleClick(item.title);
+                  handleClick(menu.id);
                 }}
                 color="primary"
                 sx={{
@@ -198,26 +216,27 @@ export default function SideBar({ isOpen }) {
                     justifyContent: "center",
                   }}
                 >
-                  {item.icon}
+                  {menu.icon}
                 </ListItemIcon>
                 <ListItemText
-                  primary={item.title}
+                  primary={menu.title}
                   sx={{ opacity: isOpen ? 1 : 0 }}
                 />
+                {isOpen && menu.listItems?.length > 0 && (settings.find(item => item.id === menu.id).open ? <ExpandLess /> : <ExpandMore />) }
               </ListItemButton>
               <Collapse
                 style={{ display: isOpen ? "block" : "none" }}
-                in={true}
+                in={settings.find(item => item.id === menu.id).open}
                 timeout="auto"
                 unmountOnExit
               >
                 <List component="div" disablePadding>
-                  {item.listItems?.map((tinyItem) => (
+                  {menu.listItems?.map((submenu) => (
                     <ListItemButton
                       sx={{ pl: 9 }}
-                      key={`${menu.title}-${item.title}-${tinyItem.title}`}
+                      key={`${menu.title}-${menu.title}-${submenu.title}`}
                     >
-                      <ListItemText primary={tinyItem.title} />
+                      <ListItemText primary={submenu.title} />
                     </ListItemButton>
                   ))}
                 </List>
