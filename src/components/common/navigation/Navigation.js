@@ -39,7 +39,7 @@ export default function Navigation({toggleDrawer, open}) {
                         >
                             {open ? <MenuOpenIcon /> : <MenuIcon /> }
                     </IconButton>
-                    <Typography variant='h6' className={classes.title} onClick={() => {toggleDrawer(true)}}>
+                    <Typography variant='h6' className={classes.title}>
                         Isaac Daniel Reyna
                     </Typography>
                     <Link to='/'>
