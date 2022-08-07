@@ -50,7 +50,7 @@ export default function Navigation({toggleDrawer, open}) {
                     </Link>
                     <Link to='/registration'>
                         <Button>Register</Button>
-                    </Link>                    
+                    </Link>
                     <Link to='/login'>
                         <Button>Login</Button>
                     </Link>
