@@ -10,11 +10,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MiniProfile from "./MiniProfile";
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -77,7 +79,8 @@ const drawerMenu = [
         ],
       },
       {
-        title: "Dashboards",
+        title: "Login",
+        link: "./login",
         id: 2,
         icon: <MailIcon color="primary" />,
       },
@@ -101,13 +104,11 @@ const drawerMenu = [
       {
         title: "Users",
         id: 4,
-        icon: <InboxIcon color="primary" />,
+        icon: <ManageAccountsIcon color="primary" />,
         listItems: [
-          { title: "One" },
-          { title: "Two" },
-          { title: "Three" },
-          { title: "Four" },
-          { title: "Five" },
+            { title: "Users", link: './users' },
+            { title: "Groups" },
+            { title: "Roles" },
         ],
       },
       {
@@ -181,6 +182,7 @@ export default function SideBar({ isSidebarOpen }) {
               key={menu.title}
               disablePadding
               sx={{ display: "block" }}
+              {...(menu.listItems ? {}:{button: true, component: Link, to: menu.link ? menu.link : '#'})}
             >
               <ListItemButton
                 onClick={() => {
@@ -217,12 +219,17 @@ export default function SideBar({ isSidebarOpen }) {
               >
                 <List component="div" disablePadding>
                   {menu.listItems?.map((submenu) => (
-                    <ListItemButton
-                      sx={{ pl: 9 }}
-                      key={`${menu.title}-${menu.title}-${submenu.title}`}
-                    >
-                      <ListItemText primary={submenu.title} />
+                    <ListItem
+                    color="primary"
+                    key={`${menu.title}-${menu.title}-${submenu.title}`}
+                    disablePadding
+                    sx={{ display: "block" }}
+                    button component={Link} to={ submenu.link ? submenu.link : "#"}
+                >
+                    <ListItemButton sx={{ pl: 9 }}>
+                        <ListItemText primary={submenu.title} />
                     </ListItemButton>
+                    </ListItem>
                   ))}
                 </List>
               </Collapse>
