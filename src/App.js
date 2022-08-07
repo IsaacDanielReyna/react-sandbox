@@ -28,7 +28,7 @@ export default function App() {
             <Router>
                 <Navigation toggleDrawer={toggleDrawer} open={open}/>
                 <Box sx={{ display: 'flex' }}>
-                    <SideBar isOpen={open}/>
+                    <SideBar isSidebarOpen={open}/>
                     <Box sx={{ flexGrow: 1, p: 3 }}>
                         <Typography paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

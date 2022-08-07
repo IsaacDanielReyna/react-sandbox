@@ -2,9 +2,6 @@ import * as React from "react";
 import { useState } from 'react';
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,6 +14,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import MiniProfile from "./MiniProfile";
 
 const drawerWidth = 240;
 
@@ -44,15 +42,6 @@ const closedMixin = (theme) => ({
   background: "#0a1021",
   color: "white",
 });
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex", //done
-  alignItems: "center", //done
-  justifyContent: "flex-end", //done
-  padding: theme.spacing(0, 1), //done
-  // necessary for content to be below app bar //done
-  ...theme.mixins.toolbar, //done
-}));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -149,7 +138,7 @@ const drawerMenu = [
   },
 ];
 
-export default function SideBar({ isOpen }) {
+export default function SideBar({ isSidebarOpen }) {
     const [settings, setSettings] = useState([
         { id: 1, open: false },
         { id: 2, open: false },
@@ -164,14 +153,10 @@ export default function SideBar({ isOpen }) {
   };
 
   return (
-    <Drawer variant="permanent" open={isOpen} sx={{ zIndex: 0 }}>
+    <Drawer variant="permanent" open={isSidebarOpen} sx={{ zIndex: 0 }}>
       <Toolbar />
-      <DrawerHeader>
-        <IconButton color="inherit">
-          <ChevronLeftIcon />
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
+      <MiniProfile open={isSidebarOpen} />
+
       {drawerMenu.map((header) => (
         <List
           color="inherit"
@@ -183,7 +168,7 @@ export default function SideBar({ isOpen }) {
               style={{
                 background: "none",
                 color: "white",
-                display: isOpen ? "block" : "none",
+                display: isSidebarOpen ? "block" : "none",
               }}
             >
               {header.title}
@@ -204,7 +189,7 @@ export default function SideBar({ isOpen }) {
                 color="primary"
                 sx={{
                   minHeight: 48,
-                  justifyContent: isOpen ? "initial" : "center",
+                  justifyContent: isSidebarOpen ? "initial" : "center",
                   px: 2.5,
                 }}
               >
@@ -212,7 +197,7 @@ export default function SideBar({ isOpen }) {
                   color="primary"
                   sx={{
                     minWidth: 0,
-                    mr: isOpen ? 3 : "auto",
+                    mr: isSidebarOpen ? 3 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -220,12 +205,12 @@ export default function SideBar({ isOpen }) {
                 </ListItemIcon>
                 <ListItemText
                   primary={menu.title}
-                  sx={{ opacity: isOpen ? 1 : 0 }}
+                  sx={{ opacity: isSidebarOpen ? 1 : 0 }}
                 />
-                {isOpen && menu.listItems?.length > 0 && (settings.find(item => item.id === menu.id).open ? <ExpandLess /> : <ExpandMore />) }
+                {isSidebarOpen && menu.listItems?.length > 0 && (settings.find(item => item.id === menu.id).open ? <ExpandLess /> : <ExpandMore />) }
               </ListItemButton>
               <Collapse
-                style={{ display: isOpen ? "block" : "none" }}
+                style={{ display: isSidebarOpen ? "block" : "none" }}
                 in={settings.find(item => item.id === menu.id).open}
                 timeout="auto"
                 unmountOnExit
