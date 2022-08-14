@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core/styles';
+import * as React from 'react';
+import {useState} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CyberTheme from './themes/CyberTheme';
 import Home from './components/home/Home';
@@ -16,33 +17,36 @@ import Users from './components/users/Users';
 import SideBar from './components/common/sidebar/SideBar';
 import Box from '@mui/material/Box';
 
+/**
+ * App
+ * @return {React.ReactElement}
+ */
 export default function App() {
-    const [open, setOpen] = useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    }
+  const [open, setOpen] = useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
-    return (
-        <ThemeProvider theme={CyberTheme}>
-            <CssBaseline />
-            <Router>
-                <Navigation toggleDrawer={toggleDrawer} open={open}/>
-                <Box sx={{ display: 'flex' }}>
-                    <SideBar isSidebarOpen={open}/>
-                    <Container>
-                        <Switch>
-                            <PrivateRoute exact path='/' component={Home} />
-                            <Route exact path='/login' component={Login} />
-                            <Route exact path='/logout' component={Logout} />
-                            <Route exact path='/registration' component={Register} />
-                            <PrivateRoute path='/profile/:username?' component={Profile} />
-                            <PrivateRoute path='/users' component={Users} />
-                            <Route component={Error404} />
-                        </Switch>
-                    </Container>
-                </Box>
-
-            </Router>
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={CyberTheme}>
+      <CssBaseline />
+      <Router>
+        <Navigation toggleDrawer={toggleDrawer} open={open} />
+        <Box sx={{display: 'flex'}}>
+          <SideBar isSidebarOpen={open} />
+          <Container>
+            <Switch>
+              <PrivateRoute exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/logout" component={Logout} />
+              <Route exact path="/registration" component={Register} />
+              <PrivateRoute path="/profile/:username?" component={Profile} />
+              <PrivateRoute path="/users" component={Users} />
+              <Route component={Error404} />
+            </Switch>
+          </Container>
+        </Box>
+      </Router>
+    </ThemeProvider>
+  );
 }
