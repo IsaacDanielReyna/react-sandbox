@@ -4,10 +4,10 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 export const drawerMenu = [
     {
-        title: 'General',
+        title: 'Examples',
         listItems: [
             {
-                title: 'Blueprints',
+                title: 'Example 1',
                 id: 1,
                 icon: <InboxIcon color="primary" />,
                 listItems: [
@@ -19,13 +19,7 @@ export const drawerMenu = [
                 ],
             },
             {
-                title: 'Login',
-                link: '/login',
-                id: 2,
-                icon: <MailIcon color="primary" />,
-            },
-            {
-                title: 'Data Display',
+                title: 'Example 2',
                 id: 3,
                 icon: <InboxIcon color="primary" />,
                 listItems: [
@@ -45,35 +39,7 @@ export const drawerMenu = [
                 title: 'Users',
                 id: 4,
                 icon: <ManageAccountsIcon color="primary" />,
-                listItems: [
-                    { title: 'Users', link: '/users' },
-                    { title: 'Groups' },
-                    { title: 'Roles' },
-                ],
-            },
-            {
-                title: 'Projects',
-                id: 5,
-                icon: <MailIcon color="primary" />,
-                listItems: [
-                    { title: 'One' },
-                    { title: 'Two' },
-                    { title: 'Three' },
-                    { title: 'Four' },
-                    { title: 'Five' },
-                ],
-            },
-            {
-                title: 'Invoices',
-                id: 6,
-                icon: <InboxIcon color="primary" />,
-                listItems: [
-                    { title: 'One' },
-                    { title: 'Two' },
-                    { title: 'Three' },
-                    { title: 'Four' },
-                    { title: 'Five' },
-                ],
+                link: '/users',
             },
         ],
     },
