@@ -54,9 +54,6 @@ export default function Navigation({ toggleDrawer, open }) {
                         <Link to="/profile">
                             <Button>Profile</Button>
                         </Link>
-                        <Link to="/registration">
-                            <Button>Register</Button>
-                        </Link>
                         <Link to="/login">
                             <Button>Login</Button>
                         </Link>

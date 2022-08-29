@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Collapse, makeStyles, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     formContainer: {
@@ -65,17 +66,19 @@ export default function Login() {
                 messages.push('Wrong username or password');
             }
         }
-        setAlertMessage(messages.map((message) => <div key={message}>{message}</div>));
+        setAlertMessage(
+            messages.map((message) => <div key={message}>{message}</div>)
+        );
     }
 
     return (
         <>
             <div className={classes.formContainer}>
-                <form className={classes.form} noValidate autoComplete='off'>
+                <form className={classes.form} noValidate autoComplete="off">
                     <TextField
-                        id='username'
-                        label='Username'
-                        variant='filled'
+                        id="username"
+                        label="Username"
+                        variant="filled"
                         required
                         fullWidth
                         error={hasInvalidUsername}
@@ -83,10 +86,10 @@ export default function Login() {
                         onChange={(event) => setUsername(event.target.value)}
                     />
                     <TextField
-                        id='password'
-                        label='Password'
-                        variant='filled'
-                        type='password'
+                        id="password"
+                        label="Password"
+                        variant="filled"
+                        type="password"
                         required
                         fullWidth
                         error={hasInvalidPassword}
@@ -95,11 +98,11 @@ export default function Login() {
                     />
                     <Button
                         disabled={username === '' || password === ''}
-                        variant='contained'
-                        size='large'
-                        color='primary'
+                        variant="contained"
+                        size="large"
+                        color="primary"
                         fullWidth
-                        type='submit'
+                        type="submit"
                         onClick={validateLogin}
                     >
                         Login
@@ -109,6 +112,14 @@ export default function Login() {
                             <Alert severity={severity}>{alertMessage}</Alert>
                         </Collapse>
                     </div>
+                    <Button
+                        variant="outlined"
+                        fullWidth
+                        component={Link}
+                        to="/registration"
+                    >
+                        Register?
+                    </Button>
                 </form>
             </div>
         </>
