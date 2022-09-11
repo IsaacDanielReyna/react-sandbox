@@ -1,12 +1,17 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import UserService from '../../../services/user-service';
 
-export default function PrivateRoute({ component: Component, ...rest }) {
+export default function PrivateRoute({ component: Component, roles, ...rest }) {
     return (
         <Route
             {...rest}
             render={(props) =>
-                localStorage.getItem('token') ? <Component {...props} /> : <Redirect to='/login' />
+                roles && UserService.hasRole(roles) ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/" />
+                )
             }
         />
     );

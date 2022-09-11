@@ -10,6 +10,7 @@ import {
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import UserService from '../../../services/user-service';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,12 +55,15 @@ export default function Navigation({ toggleDrawer, open }) {
                         <Link to="/profile">
                             <Button>Profile</Button>
                         </Link>
-                        <Link to="/login">
-                            <Button>Login</Button>
-                        </Link>
-                        <Link to="/logout">
-                            <Button>Logout</Button>
-                        </Link>
+                        {UserService.getToken() ? (
+                            <Button onClick={() => UserService.logout()}>
+                                Logout
+                            </Button>
+                        ) : (
+                            <Button onClick={() => UserService.login()}>
+                                Login
+                            </Button>
+                        )}
                     </Toolbar>
                 </AppBar>
             </div>

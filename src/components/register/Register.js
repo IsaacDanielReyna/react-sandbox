@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Collapse, makeStyles, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import userService from '../../services/user-service';
-import { useForm } from "react-hook-form";
+import UserService from '../../services/user-service';
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
     formContainer: {
@@ -26,108 +26,130 @@ export default function Register() {
     const [alertMessage, setAlertMessage] = useState('');
     const [severity, setSeverity] = useState('error');
 
-    const { 
+    const {
         register,
         handleSubmit,
         setError,
-        formState: { errors }
+        formState: { errors },
     } = useForm({
         defaultValues: {
             username: '',
             first_name: '',
             last_name: '',
-            password: ''
-        }
+            password: '',
+        },
     });
 
     // handle form submission
     const onSubmit = (user) => {
-        userService.register(user).then(response => {
-            setSeverity('success');
-            setAlertMessage('Registration Successful', response.data);
-        }).catch(error => {
-            const errors = error.response.data;
-            if (errors.username) {
-                setSeverity('error');
-                setAlertMessage('');
-                setError('username', {
-                    type: "server",
-                    message: errors.username.message,
-                });
-            }
-        });
+        UserService.register(user)
+            .then((response) => {
+                setSeverity('success');
+                setAlertMessage('Registration Successful', response.data);
+            })
+            .catch((error) => {
+                const errors = error.response.data;
+                if (errors.username) {
+                    setSeverity('error');
+                    setAlertMessage('');
+                    setError('username', {
+                        type: 'server',
+                        message: errors.username.message,
+                    });
+                }
+            });
     };
 
     return (
         <>
             <div className={classes.formContainer}>
-                <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className={classes.form}
+                >
                     <TextField
-                        {...register("username", {
+                        {...register('username', {
                             required: true,
-                            minLength: { value: 4, message: 'Username min length is 4'}
+                            minLength: {
+                                value: 4,
+                                message: 'Username min length is 4',
+                            },
                         })}
-                        id='username'
-                        label='Username'
-                        variant='filled'
+                        id="username"
+                        label="Username"
+                        variant="filled"
                         required
                         fullWidth
                         error={errors.username ? true : false}
                     />
 
                     <TextField
-                        {...register("first_name", {
+                        {...register('first_name', {
                             required: true,
-                            minLength: { value: 4, message: 'First name min length is 4'}
+                            minLength: {
+                                value: 4,
+                                message: 'First name min length is 4',
+                            },
                         })}
-                        id='first_name'
-                        label='First Name'
-                        variant='filled'
+                        id="first_name"
+                        label="First Name"
+                        variant="filled"
                         required
                         fullWidth
                         error={errors.first_name ? true : false}
                     />
 
                     <TextField
-                        {...register("last_name", {
+                        {...register('last_name', {
                             required: true,
-                            minLength: { value: 4, message: 'Last name min length is 4'}
+                            minLength: {
+                                value: 4,
+                                message: 'Last name min length is 4',
+                            },
                         })}
-                        id='last_name'
-                        label='Last Name'
-                        variant='filled'
+                        id="last_name"
+                        label="Last Name"
+                        variant="filled"
                         required
                         fullWidth
                         error={errors.last_name ? true : false}
                     />
 
                     <TextField
-                        {...register("password", {
+                        {...register('password', {
                             required: true,
-                            minLength: { value: 4, message: 'Password min length is 4'}
+                            minLength: {
+                                value: 4,
+                                message: 'Password min length is 4',
+                            },
                         })}
-                        id='password'
-                        label='Password'
-                        variant='filled'
-                        type='password'
+                        id="password"
+                        label="Password"
+                        variant="filled"
+                        type="password"
                         required
                         fullWidth
                         error={errors.password ? true : false}
-                    />                    
-                    
+                    />
+
                     <Button
                         disabled={false}
-                        variant='contained'
-                        size='large'
-                        color='primary'
+                        variant="contained"
+                        size="large"
+                        color="primary"
                         fullWidth
-                        type='submit'
+                        type="submit"
                     >
                         Register
                     </Button>
 
                     <div className={classes.alertContainer}>
-                        <Collapse in={(alertMessage.length > 0) || (Object.keys(errors).length > 0)}>
+                        <Collapse
+                            in={
+                                alertMessage.length > 0 ||
+                                Object.keys(errors).length > 0
+                            }
+                        >
                             <Alert severity={severity}>
                                 <div>{alertMessage}</div>
                                 <div>{errors.username?.message}</div>

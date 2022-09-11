@@ -12,6 +12,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { drawerMenu } from '../../../sample/sidebar-menu';
+import UserService from '../../../services/user-service';
 
 export default function MenuLogic({ isSidebarOpen }) {
     const [settings, setSettings] = useState([
@@ -31,117 +32,139 @@ export default function MenuLogic({ isSidebarOpen }) {
         );
     };
 
+    const isAuthorized = (roles) => {
+        if (roles) {
+            return UserService.hasRole(roles);
+        }
+
+        return true;
+    };
+
     return (
         <Box id="menu-logic" style={{ overflow: 'hidden', overflowY: 'auto' }}>
-            {drawerMenu.map((header) => (
-                <List
-                    color="inherit"
-                    key={header.title}
-                    subheader={
-                        <ListSubheader
-                            disableSticky
-                            component="div"
-                            id="nested-list-subheader"
-                            style={{
-                                background: 'none',
-                                color: 'white',
-                                display: isSidebarOpen ? 'block' : 'none',
-                            }}
-                        >
-                            {header.title}
-                        </ListSubheader>
-                    }
-                >
-                    {header.listItems.map((menu) => (
-                        <ListItem
-                            color="primary"
-                            key={menu.title}
-                            disablePadding
-                            sx={{ display: 'block' }}
-                            {...(menu.listItems
-                                ? {}
-                                : {
-                                      button: true,
-                                      component: Link,
-                                      to: menu.link ? menu.link : '#',
-                                  })}
-                        >
-                            <ListItemButton
-                                onClick={() => {
-                                    handleClick(menu.id);
-                                }}
-                                color="primary"
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: isSidebarOpen
-                                        ? 'initial'
-                                        : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    color="primary"
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: isSidebarOpen ? 3 : 'auto',
-                                        justifyContent: 'center',
+            {drawerMenu.map(
+                (header) =>
+                    isAuthorized(header.roles) && (
+                        <List
+                            color="inherit"
+                            key={header.title}
+                            subheader={
+                                <ListSubheader
+                                    disableSticky
+                                    component="div"
+                                    id="nested-list-subheader"
+                                    style={{
+                                        background: 'none',
+                                        color: 'white',
+                                        display: isSidebarOpen
+                                            ? 'block'
+                                            : 'none',
                                     }}
                                 >
-                                    {menu.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={menu.title}
-                                    sx={{ opacity: isSidebarOpen ? 1 : 0 }}
-                                />
-                                {isSidebarOpen &&
-                                    menu.listItems?.length > 0 &&
-                                    (settings.find(
-                                        (item) => item.id === menu.id
-                                    ).open ? (
-                                        <ExpandLess />
-                                    ) : (
-                                        <ExpandMore />
-                                    ))}
-                            </ListItemButton>
-                            <Collapse
-                                style={{
-                                    display: isSidebarOpen ? 'block' : 'none',
-                                }}
-                                in={
-                                    settings.find((item) => item.id === menu.id)
-                                        .open
-                                }
-                                timeout="auto"
-                                unmountOnExit
-                            >
-                                <List component="div" disablePadding>
-                                    {menu.listItems?.map((submenu) => (
-                                        <ListItem
+                                    {header.title}
+                                </ListSubheader>
+                            }
+                        >
+                            {header.listItems.map((menu) => (
+                                <ListItem
+                                    color="primary"
+                                    key={menu.title}
+                                    disablePadding
+                                    sx={{ display: 'block' }}
+                                    {...(menu.listItems
+                                        ? {}
+                                        : {
+                                              button: true,
+                                              component: Link,
+                                              to: menu.link ? menu.link : '#',
+                                          })}
+                                >
+                                    <ListItemButton
+                                        onClick={() => {
+                                            handleClick(menu.id);
+                                        }}
+                                        color="primary"
+                                        sx={{
+                                            minHeight: 48,
+                                            justifyContent: isSidebarOpen
+                                                ? 'initial'
+                                                : 'center',
+                                            px: 2.5,
+                                        }}
+                                    >
+                                        <ListItemIcon
                                             color="primary"
-                                            key={`${menu.title}-${menu.title}-${submenu.title}`}
-                                            disablePadding
-                                            sx={{ display: 'block' }}
-                                            button
-                                            component={Link}
-                                            to={
-                                                submenu.link
-                                                    ? submenu.link
-                                                    : '#'
-                                            }
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: isSidebarOpen ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                            }}
                                         >
-                                            <ListItemButton sx={{ pl: 9 }}>
-                                                <ListItemText
-                                                    primary={submenu.title}
-                                                />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </Collapse>
-                        </ListItem>
-                    ))}
-                </List>
-            ))}
+                                            {menu.icon}
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={menu.title}
+                                            sx={{
+                                                opacity: isSidebarOpen ? 1 : 0,
+                                            }}
+                                        />
+                                        {isSidebarOpen &&
+                                            menu.listItems?.length > 0 &&
+                                            (settings.find(
+                                                (item) => item.id === menu.id
+                                            ).open ? (
+                                                <ExpandLess />
+                                            ) : (
+                                                <ExpandMore />
+                                            ))}
+                                    </ListItemButton>
+                                    <Collapse
+                                        style={{
+                                            display: isSidebarOpen
+                                                ? 'block'
+                                                : 'none',
+                                        }}
+                                        in={
+                                            settings.find(
+                                                (item) => item.id === menu.id
+                                            ).open
+                                        }
+                                        timeout="auto"
+                                        unmountOnExit
+                                    >
+                                        <List component="div" disablePadding>
+                                            {menu.listItems?.map((submenu) => (
+                                                <ListItem
+                                                    color="primary"
+                                                    key={`${menu.title}-${menu.title}-${submenu.title}`}
+                                                    disablePadding
+                                                    sx={{ display: 'block' }}
+                                                    button
+                                                    component={Link}
+                                                    to={
+                                                        submenu.link
+                                                            ? submenu.link
+                                                            : '#'
+                                                    }
+                                                >
+                                                    <ListItemButton
+                                                        sx={{ pl: 9 }}
+                                                    >
+                                                        <ListItemText
+                                                            primary={
+                                                                submenu.title
+                                                            }
+                                                        />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            ))}
+                                        </List>
+                                    </Collapse>
+                                </ListItem>
+                            ))}
+                        </List>
+                    )
+            )}
         </Box>
     );
 }

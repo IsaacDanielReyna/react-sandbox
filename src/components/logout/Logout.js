@@ -1,6 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import UserService from '../../services/user-service';
 export default function Logout() {
-    localStorage.removeItem('token');
-    return <Redirect to='/login' />;
+    if (UserService.getToken()) {
+        UserService.logout();
+    }
+    return <Redirect to="/" />;
 }

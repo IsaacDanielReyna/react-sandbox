@@ -21,7 +21,7 @@ export const drawerMenu = [
             {
                 title: 'Example 2',
                 id: 3,
-                icon: <InboxIcon color="primary" />,
+                icon: <MailIcon color="primary" />,
                 listItems: [
                     { title: 'One' },
                     { title: 'Two' },
@@ -34,6 +34,7 @@ export const drawerMenu = [
     },
     {
         title: 'Management',
+        roles: ['view-settings-menu'],
         listItems: [
             {
                 title: 'Users',

@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
 
-import userService from '../../services/user-service';
+import UserService from '../../services/user-service';
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -67,7 +67,7 @@ export default function Users() {
     const tableHeight = pageSize * rowSize + headerSize + 54;
 
     React.useEffect(() => {
-        userService.getUsers().then((response) => {
+        UserService.getUsers().then((response) => {
             if (response.data) {
                 let userlist = response.data.map((user, index) => {
                     return {
