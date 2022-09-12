@@ -2,7 +2,7 @@ import api from '../utils/api';
 import Keycloak from 'keycloak-js';
 
 const keycloak = new Keycloak({
-    url: 'https://keycloack.isaacreyna.com',
+    url: 'https://keycloak.isaacreyna.com',
     realm: 'demo',
     clientId: 'local-auth',
 });
