@@ -11,7 +11,6 @@ export default function Profile(props) {
 
     React.useEffect(() => {
         const username = props.match.params.username || 'jsmith';
-        console.log('username', username);
 
         UserService.profile(username).then((response) => {
             if (response.data) {

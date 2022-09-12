@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import UserService from '../../../services/user-service';
+import PrivateComponent from '../private-component/PrivateComponent';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,9 +53,11 @@ export default function Navigation({ toggleDrawer, open }) {
                         <Link to="/">
                             <Button>Home</Button>
                         </Link>
-                        <Link to="/profile">
-                            <Button>Profile</Button>
-                        </Link>
+                        <PrivateComponent roles={['view-profile']}>
+                            <Link to="/profile">
+                                <Button>Profile</Button>
+                            </Link>
+                        </PrivateComponent>
                         {UserService.getToken() ? (
                             <Button onClick={() => UserService.logout()}>
                                 Logout
