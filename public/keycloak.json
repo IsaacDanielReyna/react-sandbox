@@ -2,7 +2,7 @@
     "realm": "demo",
     "auth-server-url": "https://keycloak.isaacreyna.com/",
     "ssl-required": "all",
-    "resource": "demo-local-auth",
+    "resource": "demo-auth",
     "public-client": true,
     "confidential-port": 0
 }
