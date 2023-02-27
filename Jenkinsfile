@@ -15,7 +15,7 @@ pipeline {
         GIT_URL = 'https://github.com/IsaacDanielReyna/react-sandbox.git'
         IMAGE = 'isaacdanielreyna/react-sandbox'
         TAG = '0.1.0'
-        CONTAINER_NAME = 'react-sandbox'
+        CONTAINER_NAME = 'react'
         EXTERNAL_PORT = '1337'
         INTERNAL_PORT = '80'
     }
